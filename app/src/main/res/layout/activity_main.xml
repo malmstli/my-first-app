@@ -8,36 +8,22 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/appCount"
+        android:id="@+id/Count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
         android:textSize="36sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="64dp" />
 
-    <TextView
-        android:id="@+id/welcomeView"
+    <Button
+        android:id="@+id/buttonClickHandler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Välkommen!"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/appCount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/myFloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:clickable="true"
-        android:contentDescription="Inställningar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_manage" />
+        android:onClick="buttonClickHandler"
+        android:text="Button"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="307dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

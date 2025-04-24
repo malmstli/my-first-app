@@ -2,70 +2,51 @@ package fi.arcada.codechallenge;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
+
+
 public class MainActivity extends AppCompatActivity {
-    private boolean isInitialLaunch = true;
-    private TextView appCountTextView;
-    private TextView welcomeTextView;
-    private FloatingActionButton settingsButton;
 
-    private SharedPreferences sharedPreferences;
-    private static final String PREFS_NAME = "AppCounterPrefs";
-    private static final String APP_COUNTER_KEY = "appCounter";
-    private static final String SAVED_TEXT_KEY = "savedText";
+    ArrayList<Double> values = new ArrayList<Double>();
 
-    @SuppressLint("MissingInflatedId")
+    private TextView Count;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstancesState){
+        super.onCreate(savedInstancesState);
         setContentView(R.layout.activity_main);
 
-        appCountTextView = findViewById(R.id.appCount);
-        welcomeTextView = findViewById(R.id.welcomeView);
-        settingsButton = findViewById(R.id.myFloatingActionButton);
+        Count = findViewById(R.id.Count);
 
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-
-        int appCounter = sharedPreferences.getInt(APP_COUNTER_KEY, 0);
-        appCounter++;
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(APP_COUNTER_KEY, appCounter);
-        editor.apply();
-
-        appCountTextView.setText(String.valueOf(appCounter));
-
-        welcomeTextView.setText("Hej på dig!");
-
-        settingsButton.setOnClickListener(v -> openSettings());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (!isInitialLaunch) {
-
-            String savedText = sharedPreferences.getString(SAVED_TEXT_KEY, null);
-            if (savedText != null && !savedText.isEmpty()) {
-                welcomeTextView.setText(savedText);
-            } else {
-                welcomeTextView.setText("Hej igen!");
-            }
-        } else {
-            isInitialLaunch = false;
+        for (int i = 0; i<13; i++){
+            double randomValue = Math.random();
+            values.add(randomValue);
         }
     }
+    public void buttonClickHandler(View view){calculate();}
 
-    private void openSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+    private void calculate(){
+        Statistics meanCalc = new Statistics();
+
+        int windowSize = 3;
+
+        ArrayList<Double> temps = new ArrayList<>(Arrays.asList(17.5, 16.0, 16.5, 15.0, 17.5, 18.0, 15.5, 20.0, 19.5, 16.0));
+        ArrayList<Double> result = meanCalc.glideMeanValue(temps, windowSize);
+        Count.setText("SMA: "+result);
     }
+
+
 }
